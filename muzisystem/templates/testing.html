@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for album in Albums %}
+        <a href="{{ album.album_thumbnail.url }}"> {{ album.album_name }} (Genre: {{ album.genre_id.genre_name }}) Artist:{{ album.artist_id.artist_name }} </a>
+        <ui>
+        <br>
+            Songs Given Below
+            {% for track in Tracks %}
+                {% if track.album_id == album %}
+                    <li>
+                        <a href="{{ track.track.url }}"> {{ track.track_name }}&nbsp;</a>
+                        {% if track.track_thumbnail == '' %}
+                        <a href="{{ album.album_thumbnail.url }}"> (Thumbnail) </a>
+
+                        {% else %}
+                        <a href="{{ track.track_thumbnail.url }}"> (Thumbnail) </a>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ui>
+        <br>
+    {% endfor %}
+
+    <br>
+    <h4>Upload from Here</h4>
+    <a href={% url 'mymuzi:utracks' %}> Upload Tracks </a>
+    <br>
+    <a href={% url 'mymuzi:ualbums' %}> Upload Albums </a>
+    <br>
+    <a href={% url 'mymuzi:uartist' %}> Upload Artists </a>
+    <br>
+    <a href={% url 'mymuzi:ugenre' %}> Upload Genre </a>
+</body>
+</html>
